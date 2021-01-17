@@ -12,6 +12,7 @@ import {
   TextInput 
 } from 'react-native';
 import Icon from "react-native-vector-icons/AntDesign"
+import { Searchbar } from "react-native-paper"
 
 const dev_Height = Dimensions.get('window').height
 const dev_Width = Dimensions.get('window').width
@@ -56,7 +57,7 @@ export default class App extends React.Component {
         style={styles.Image_Background_Style}>
 
           <View style={styles.Search_Box_View}>
-            <TextInput 
+            {/* <TextInput 
             placeholder="Search" 
             placeholderTextColor="#FFF" 
             style={styles.Search_Box} 
@@ -65,7 +66,13 @@ export default class App extends React.Component {
 
             <TouchableOpacity style={styles.button_touch} onPress={this.fetch_weather}>
               <Icon name="search1" size={24} color="#FFF"/>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <Searchbar
+              placeholder="Search"
+              style={styles.Search_Box} 
+              onChangeText={(text) => this.setState({city:text})}
+              onIconPress={this.fetch_weather}
+            />
 
           </View>
           {/* Change the background relevant to the country & city */}
@@ -116,10 +123,10 @@ const styles = StyleSheet.create({
   Search_Box:{
     height:"35%",
     width:"80%",
-    borderColor:"#FFF",
     borderWidth:1,
     borderRadius:15,
     color:"#FFF",
+    backgroundColor:"rgba(255,255,255,0.5)",
     paddingHorizontal:15
   },
   button_touch:{
