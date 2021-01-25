@@ -1,4 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
+// import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { 
   StyleSheet, 
@@ -8,15 +8,16 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  StatusBar,
   TouchableOpacity,
-  TextInput 
+  TextInput, 
 } from 'react-native';
 import Icon from "react-native-vector-icons/AntDesign"
 import { Searchbar } from "react-native-paper"
 
 const dev_Height = Dimensions.get('window').height
 const dev_Width = Dimensions.get('window').width
-
+//REQUIRES ERROR HANDLING FOR WRONG CITIES
 export default class App extends React.Component {
   constructor(props){
     super(props);
@@ -51,53 +52,42 @@ export default class App extends React.Component {
 
   render(){
     return (
-      <SafeAreaView>
         <ImageBackground
         source={{uri:"https://images.unsplash.com/photo-1610041502471-be78593ecd89?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDEwfDZzTVZqVExTa2VRfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"}}
         style={styles.Image_Background_Style}>
+          <SafeAreaView>
+            <View style={styles.Search_Box_View}>
+            <StatusBar barStyle='light-content'/>
+              <Searchbar
+                placeholder="Search"
+                style={styles.Search_Box} 
+                onChangeText={(text) => this.setState({city:text})}
+                onIconPress={this.fetch_weather}
+              />
 
-          <View style={styles.Search_Box_View}>
-            {/* <TextInput 
-            placeholder="Search" 
-            placeholderTextColor="#FFF" 
-            style={styles.Search_Box} 
-            onChangeText={(text)=>this.setState({city:text})}
-            />
-
-            <TouchableOpacity style={styles.button_touch} onPress={this.fetch_weather}>
-              <Icon name="search1" size={24} color="#FFF"/>
-            </TouchableOpacity> */}
-            <Searchbar
-              placeholder="Search"
-              style={styles.Search_Box} 
-              onChangeText={(text) => this.setState({city:text})}
-              onIconPress={this.fetch_weather}
-            />
-
-          </View>
-          {/* Change the background relevant to the country & city */}
-          <View style={styles.Weather_Box_Main}>
-            <View style={styles.Weather_Holder_View}>
-              <Image source={{uri:"http://openweathermap.org/img/wn/"+this.state.icon+"@2x.png"}} style={styles.Weather_Image}/>
-              <View>
-                <Text style={styles.city_display_text}>{this.state.city_display}</Text>
-                <Text style={styles.temperature_text}>{this.state.temp}</Text>
+            </View>
+            {/* Change the background relevant to the country & city */}
+            <View style={styles.Weather_Box_Main}>
+              <View style={styles.Weather_Holder_View}>
+                <Image source={{uri:"http://openweathermap.org/img/wn/"+this.state.icon+"@2x.png"}} style={styles.Weather_Image}/>
+                <View>
+                  <Text style={styles.city_display_text}>{this.state.city_display}</Text>
+                  <Text style={styles.temperature_text}>{this.state.temp}</Text>
+                </View>
               </View>
             </View>
-          </View>
 
-          <View style={styles.Info_Box_View}>
-            <View style={styles.Info_Holder_View}>
-              <Text style={styles.Main_Weather_Text}>{this.state.main}</Text>
-              <Text style={styles.description_text}>{this.state.desc}</Text>
-              <Text style={styles.humidity_text}>{this.state.humidity}</Text>
-              <Text style={styles.other_text}>{this.state.pressure}</Text>
-              <Text style={styles.other_text}>{this.state.visibility}</Text>
+            <View style={styles.Info_Box_View}>
+              <View style={styles.Info_Holder_View}>
+                <Text style={styles.Main_Weather_Text}>{this.state.main}</Text>
+                <Text style={styles.description_text}>{this.state.desc}</Text>
+                <Text style={styles.humidity_text}>{this.state.humidity}</Text>
+                <Text style={styles.other_text}>{this.state.pressure}</Text>
+                <Text style={styles.other_text}>{this.state.visibility}</Text>
+              </View>
             </View>
-          </View>
-
+          </SafeAreaView>
         </ImageBackground>
-      </SafeAreaView>
     );
   }
 }
